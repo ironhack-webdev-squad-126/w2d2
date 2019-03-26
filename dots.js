@@ -27,6 +27,9 @@ class Dot {
         this.color = color
 
         const domEl = document.createElement('div')
+        console.log('domEl :', domEl)
+        this.reference = domEl
+
         domEl.style.position = 'absolute'
         domEl.style.width = `${size}px`
         domEl.style.height = `${size}px`
@@ -34,6 +37,9 @@ class Dot {
         domEl.style.borderRadius = `${size / 2}px`
         domEl.style.left = `${x - size / 2}px`
         domEl.style.top = `${y - size / 2}px`
+
+        // add a click listener for the domEl
+        // remove that dot from the page
 
         document.querySelector('#game').appendChild(domEl)
     }
