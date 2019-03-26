@@ -18,6 +18,7 @@ class Game {
         this.dots.push(newDot)
     }
 }
+const game = new Game()
 
 class Dot {
     constructor(x, y, size = 20, color = '#942942') {
@@ -27,7 +28,6 @@ class Dot {
         this.color = color
 
         const domEl = document.createElement('div')
-        console.log('domEl :', domEl)
         this.reference = domEl
 
         domEl.style.position = 'absolute'
@@ -40,9 +40,14 @@ class Dot {
 
         // add a click listener for the domEl
         // remove that dot from the page
+        domEl.addEventListener(
+            'click',
+            function() {
+                this.reference.remove()
+                game.dots = game.dots.filter() // filter out the removed dot
+            }.bind(this)
+        )
 
         document.querySelector('#game').appendChild(domEl)
     }
 }
-
-new Game()
