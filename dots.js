@@ -1,14 +1,22 @@
 class Game {
     constructor() {
         this.dots = []
+        this.time = 0
 
         // 1. add Event Listener that calls addDot
-        document.querySelector('#game').addEventListener(
-            'click',
-            function(evt) {
-                console.log(this)
-                this.addDot(evt.offsetX, evt.offsetY)
-            }.bind(this)
+        this.timeInterval = setInterval(
+            function() {
+                this.time++
+                document.querySelector('#time').innerHTML = this.time
+            }.bind(this),
+            1000
+        )
+
+        this.dotInterval = setInterval(
+            function() {
+                this.addDot(Math.floor(Math.random() * 830), Math.floor(Math.random() * 830))
+            }.bind(this),
+            1500
         )
     }
 
@@ -16,6 +24,19 @@ class Game {
         // 2. add a new dot to this.dots
         const newDot = new Dot(x, y)
         this.dots.push(newDot)
+        this.displayDotCount()
+    }
+
+    displayDotCount() {
+        document.querySelector('#dots').innerHTML = this.dots.length
+        if (this.dots.length > 10) this.gameOver()
+    }
+
+    gameOver() {
+        clearInterval(this.dotInterval)
+        clearInterval(this.timeInterval)
+
+        document.querySelector('#game').innerHTML = '<h1>You lost!</h1>'
     }
 }
 const game = new Game()
@@ -44,7 +65,14 @@ class Dot {
             'click',
             function() {
                 this.reference.remove()
-                game.dots = game.dots.filter() // filter out the removed dot
+                game.dots = game.dots.filter(
+                    function(el) {
+                        if (el.x === this.x && el.y === this.y) return false
+                        return true
+                    }.bind(this)
+                ) // filter out the removed dot
+
+                game.displayDotCount()
             }.bind(this)
         )
 
