@@ -20,4 +20,5 @@ body {
     width: 840px;
     height: 840px;
     background-color: rgb(200, 200, 200);
+    position: relative;
 }
